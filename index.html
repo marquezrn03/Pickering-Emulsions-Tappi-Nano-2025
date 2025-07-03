@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Nanocellulose Emulsion Data Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .control-panel label {
+            color: #cbd5e1; /* slate-300 */
+        }
+        .control-panel select, .control-panel input {
+            background-color: #334155; /* slate-700 */
+            color: #f1f5f9; /* slate-100 */
+            border-color: #475569; /* slate-600 */
+        }
+        .plotly .modebar {
+            background-color: transparent !important;
+        }
+        .plotly .modebar-btn path {
+            fill: #94a3b8 !important; /* slate-400 */
+        }
+        .plot-container {
+             background-color: rgba(15, 23, 42, 0.7); /* slate-900 with some transparency */
+             border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200">
+
+    <div class="container mx-auto p-4 md:p-6">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight">Nanocellulose Pickering Emulsions</h1>
+            <p class="text-lg text-slate-400 mt-2">An Interactive Data Explorer for TAPPI Nano 2025, Girona</p>
+        </header>
+
+        <main class="space-y-10">
+            <!-- Section 1: Interactive Scatter Plot -->
+            <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
+                <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">1. Multi-Dimensional Property Explorer</h2>
+                <div class="control-panel grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+                    <!-- Axis & Color Controls -->
+                    <div>
+                        <label for="x-axis-select" class="block text-sm font-medium">X-Axis:</label>
+                        <select id="x-axis-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                    </div>
+                    <div>
+                        <label for="y-axis-select" class="block text-sm font-medium">Y-Axis:</label>
+                        <select id="y-axis-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                    </div>
+                    <div>
+                        <label for="color-by-select" class="block text-sm font-medium">Color By:</label>
+                        <select id="color-by-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                    </div>
+                    <!-- Filtering Controls -->
+                    <div>
+                        <label for="filter-category-select" class="block text-sm font-medium">Filter Category:</label>
+                        <select id="filter-category-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                    </div>
+                    <div>
+                        <label for="filter-value-select" class="block text-sm font-medium">Filter Value:</label>
+                        <select id="filter-value-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                    </div>
+                </div>
+                 <div class="flex justify-end space-x-4 mb-4">
+                    <label class="flex items-center space-x-2 text-sm cursor-pointer">
+                        <input type="checkbox" id="log-x-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
+                        <span>Log X-Axis</span>
+                    </label>
+                     <label class="flex items-center space-x-2 text-sm cursor-pointer">
+                        <input type="checkbox" id="log-y-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
+                        <span>Log Y-Axis</span>
+                    </label>
+                </div>
+                 <div id="interactive-scatter" class="w-full h-[600px] plot-container"></div>
+            </section>
+
+            <!-- Section 2 & 3: Side-by-Side Plots -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- Distribution Analysis -->
+                <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
+                    <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">2. Droplet Size Distribution</h2>
+                     <div class="control-panel grid grid-cols-1 gap-4 mb-6">
+                        <div>
+                            <label for="dist-category-select" class="block text-sm font-medium">Group By:</label>
+                            <select id="dist-category-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                        </div>
+                     </div>
+                    <div id="distribution-plot" class="w-full h-[500px] plot-container"></div>
+                </section>
+                
+                <!-- Correlation Heatmap -->
+                <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
+                     <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">3. Correlation Matrix</h2>
+                     <div id="heatmap-plot" class="w-full h-[552px] plot-container"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DATA SOURCE ---
+            const database = [
+                {'DOI': '10.1021/la202979p', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 0.52, 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 4.2, 'Zeta_Potential_mV': -50.0, 'Stability_Days': 60, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/bm301871k', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.09, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 95, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 10.0, 'Zeta_Potential_mV': -30.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/bm400842x', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Vinyl Acetate', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Toluene', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 112.0, 'Zeta_Potential_mV': null, 'Stability_Days': 21, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/bm400842x', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Vinyl Cinnamate', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Toluene', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 44.0, 'Zeta_Potential_mV': null, 'Stability_Days': 21, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1039/c2sm26472b', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.2, 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 5.0, 'Zeta_Potential_mV': -30.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1039/c2sm26472b', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 0.2, 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 5.0, 'Zeta_Potential_mV': -10.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1039/c2sm26472b', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cladophora','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.2, 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 5.0, 'Zeta_Potential_mV': -55.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/la500588u', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Unknown','Modification': 'Lauroyl Chloride', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 80, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 5.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/la500588u', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Unknown','Modification': 'Lauroyl Chloride', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 80, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 20.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/la404644p', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'Acetic Acid (C2)', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 40, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 75.0, 'Zeta_Potential_mV': null, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/la404644p', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'Hexanoic Acid (C6)', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 15, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 15.0, 'Zeta_Potential_mV': null, 'Stability_Days': 60, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/la404644p', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'Dodecanoic Acid (C12)', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 15, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 10.0, 'Zeta_Potential_mV': null, 'Stability_Days': 60, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodhyd.2016.06.031', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'None', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Cinnamaldehyde', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.6, 'Zeta_Potential_mV': -19.0, 'Stability_Days': 7, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodhyd.2016.06.031', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Cinnamaldehyde', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.2, 'Zeta_Potential_mV': -43.0, 'Stability_Days': 7, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.colsurfa.2016.04.025', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Rapeseed oil', 'Oil_Content_wt_percent': 35, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 46.0, 'Zeta_Potential_mV': -49.0, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.colsurfa.2016.04.025', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'None', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Rapeseed oil', 'Oil_Content_wt_percent': 35, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 45.0, 'Zeta_Potential_mV': -17.0, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.colsurfa.2016.04.025', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Rapeseed oil', 'Oil_Content_wt_percent': 35, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 19.0, 'Zeta_Potential_mV': -69.0, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2017.09.043', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'Regenerated Cellulose', 'Cellulose_Source': 'MCC','Modification': 'None', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 150.0, 'Zeta_Potential_mV': -18.0, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2017.09.043', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'MCC','Modification': 'None', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 15.0, 'Zeta_Potential_mV': -21.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.nanoen.2017.02.042', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Paraffin', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.35, 'Zeta_Potential_mV': null, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 24.0, 'Zeta_Potential_mV': -40.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-pressure homogenizer', 'Droplet_Size_um': 0.32, 'Zeta_Potential_mV': -40.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 33.0, 'Zeta_Potential_mV': -23.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-pressure homogenizer', 'Droplet_Size_um': 0.26, 'Zeta_Potential_mV': -23.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2017.12.085', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC-I', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Paraffin', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 17.0, 'Zeta_Potential_mV': -41.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2017.12.085', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC-II', 'Cellulose_Source': 'Cotton','Modification': 'Mercerized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Paraffin', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 7.0, 'Zeta_Potential_mV': -29.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.3389/fchem.2018.00409', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 10.0, 'Zeta_Potential_mV': -52.0, 'Stability_Days': 21, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.3389/fchem.2018.00409', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': null, 'Zeta_Potential_mV': null, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 100},
+                {'DOI': '10.1039/C8GC00134K', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.8, 'Oil_Type': 'Soybean oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 33.0, 'Zeta_Potential_mV': -65.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1039/C8GC00134K', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.8, 'Oil_Type': 'Soybean oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 14.0, 'Zeta_Potential_mV': -62.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.jcis.2017.11.079', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'MCC','Modification': 'Stearoylated (C18)', 'Concentration_wt_percent': 2.0, 'Oil_Type': 'Styrene', 'Oil_Content_wt_percent': 11, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 30.0, 'Zeta_Potential_mV': null, 'Stability_Days': 7, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1007/s10570-019-02648-x', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Grafted PEOXA', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 35.0, 'Zeta_Potential_mV': 33.0, 'Stability_Days': 21, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1007/s10570-019-02648-x', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'Grafted PEOXA', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 27.0, 'Zeta_Potential_mV': 32.0, 'Stability_Days': 21, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2019.115293', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'ACC method','Modification': 'None', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 35.0, 'Zeta_Potential_mV': -29.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2019.115293', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'HPH method','Modification': 'None', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': null, 'Zeta_Potential_mV': -31.0, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodchem.2020.127108', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bamboo pulp','Modification': 'Complex (CNF+CCS)', 'Concentration_wt_percent': 0.75, 'Oil_Type': 'Beeswax', 'Oil_Content_wt_percent': 3, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 11.0, 'Zeta_Potential_mV': -23.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2020.01.274', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Ginkgo','Modification': 'Sulfate groups', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 45.0, 'Zeta_Potential_mV': -23.0, 'Stability_Days': 7, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2020.01.274', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Ginkgo','Modification': 'Sulfate groups', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 18.0, 'Zeta_Potential_mV': -26.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2020.117483', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Corn oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': null, 'Zeta_Potential_mV': -17.5, 'Stability_Days': 1, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2020.117483', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'None', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Corn oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 22.0, 'Zeta_Potential_mV': -18.4, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2020.117483', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Corn oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 14.0, 'Zeta_Potential_mV': -44.1, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2021.118704', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.7, 'Oil_Type': 'Cinnamon essential oil', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 0.32, 'Zeta_Potential_mV': -43.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2023.126134', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Bacterial','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.6, 'Oil_Type': 'Camellia oil', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 0.65, 'Zeta_Potential_mV': -39.7, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1039/d3ra01412f', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'MCC','Modification': 'Cationic (Eutectic medium)', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Linseed oil', 'Oil_Content_wt_percent': 17, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 15.0, 'Zeta_Potential_mV': 35.0, 'Stability_Days': 7, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.3390/nano13162353', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Eucalyptus pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Beeswax', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.32, 'Zeta_Potential_mV': -45.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.3390/nano13162353', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Eucalyptus pulp','Modification': 'Carboxymethylated', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Beeswax', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.37, 'Zeta_Potential_mV': -55.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2023.121409', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Wood pulp','Modification': 'Carboxylated', 'Concentration_wt_percent': 1.25, 'Oil_Type': 'Ethyl acetate', 'Oil_Content_wt_percent': 7.5, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 1.7, 'Zeta_Potential_mV': -38.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': 'SSRN: 4837112', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Cationic + B-Cyclodextrin', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Citrus essential oil', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.35, 'Zeta_Potential_mV': 25.0, 'Stability_Days': 14, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2023.130319', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Eucalyptus pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Thyme essential oil', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 13.7, 'Zeta_Potential_mV': -42.0, 'Stability_Days': 15, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2023.130319', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Eucalyptus pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Thyme essential oil', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 20.5, 'Zeta_Potential_mV': -42.0, 'Stability_Days': 15, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2023.130319', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Eucalyptus pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Thyme essential oil', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 30.2, 'Zeta_Potential_mV': -42.0, 'Stability_Days': 15, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodhyd.2024.111025', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Soybean residue','Modification': 'Complex (CMCS)', 'Concentration_wt_percent': 0.6, 'Oil_Type': 'Beeswax', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 5.8, 'Zeta_Potential_mV': -41.0, 'Stability_Days': 14, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodhyd.2024.111025', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Soybean residue','Modification': 'Complex (CMCS)', 'Concentration_wt_percent': 0.6, 'Oil_Type': 'Beeswax', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 12.0, 'Zeta_Potential_mV': -35.0, 'Stability_Days': 14, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodhyd.2024.111025', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'S-CNC', 'Cellulose_Source': 'Soybean residue','Modification': 'Complex (CMCS)', 'Concentration_wt_percent': 0.6, 'Oil_Type': 'Beeswax', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 8.5, 'Zeta_Potential_mV': -28.0, 'Stability_Days': 14, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2025.123694', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'Periodate/TEMPO-oxidized', 'Concentration_wt_percent': 0.7, 'Oil_Type': 'Camellia oil', 'Oil_Content_wt_percent': 40, 'Emulsification_Method': 'High-pressure homogenizer', 'Droplet_Size_um': 3.9, 'Zeta_Potential_mV': -45.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1007/s10570-025-06539-2', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Polydimethylsiloxane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 2.0, 'Zeta_Potential_mV': -45.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1007/s10570-025-06539-2', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Polymethylmethacrylate', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 2.3, 'Zeta_Potential_mV': -45.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1007/s10570-025-06539-2', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Polystyrene', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 2.1, 'Zeta_Potential_mV': -45.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2025.144120', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 3.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 5, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.57, 'Zeta_Potential_mV': -27.57, 'Stability_Days': 0, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2025.144120', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 3.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 0.76, 'Zeta_Potential_mV': -31.33, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2025.144120', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 3.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 1.95, 'Zeta_Potential_mV': -30.85, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodres.2025.116479', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'Cellulose Nanoribbons', 'Cellulose_Source': 'Unknown','Modification': 'Oxidation/Hydrolysis', 'Concentration_wt_percent': 0.05, 'Oil_Type': 'Soybean oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 20.0, 'Zeta_Potential_mV': null, 'Stability_Days': 60, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2024.100574', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'Alkylated (C4)', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 100.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2024.100574', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'Alkylated (C6)', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 50.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2024.100574', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'Alkylated (C8)', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 30.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2024.100574', 'Emulsion_Type': 'w/o', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Wood pulp','Modification': 'Alkylated (C10)', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Dodecane', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 20.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.jcis.2024.10.080', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Softwood pulp','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 15.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 50},
+                {'DOI': '10.1016/j.jcis.2024.10.080', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Softwood pulp','Modification': 'Complex (TA+MC)', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 18.0, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 50},
+                {'DOI': '10.3390/foods13223706', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Commercial','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Thyme essential oil', 'Oil_Content_wt_percent': 2, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 1.5, 'Zeta_Potential_mV': -35.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.3390/polym16233346', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Clove essential oil', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 1.2, 'Zeta_Potential_mV': -15.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.3390/polym16233346', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Cinnamon essential oil', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 1.0, 'Zeta_Potential_mV': -15.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.3390/polym16233346', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Bacterial','Modification': 'None', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Lemongrass essential oil', 'Oil_Content_wt_percent': 1, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 0.8, 'Zeta_Potential_mV': -15.0, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.colsurfa.2024.135429', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.05, 'Oil_Type': 'Miglyol 812', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 10.0, 'Zeta_Potential_mV': -40.0, 'Stability_Days': 28, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.colsurfa.2024.135429', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.2, 'Oil_Type': 'Miglyol 812', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 2.0, 'Zeta_Potential_mV': -40.0, 'Stability_Days': 28, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.lwt.2024.117225', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Sugarcane bagasse','Modification': 'Carboxylated', 'Concentration_wt_percent': 1.2, 'Oil_Type': 'Soybean oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 7.48, 'Zeta_Potential_mV': -56.15, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2025.123245', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Pineapple peel','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.2, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 7.5, 'Zeta_Potential_mV': null, 'Stability_Days': 180, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2025.123245', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Pineapple peel','Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 50, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 4.7, 'Zeta_Potential_mV': null, 'Stability_Days': 180, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1039/d4en00920g', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Rice straw','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.2, 'Oil_Type': 'Tetradecane', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': null, 'Zeta_Potential_mV': -29.4, 'Stability_Days': 14, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1039/d4en00920g', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Rice straw','Modification': 'Formic/Sulfuric acid', 'Concentration_wt_percent': 0.2, 'Oil_Type': 'Tetradecane', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 44.4, 'Zeta_Potential_mV': -25.9, 'Stability_Days': 14, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.carbpol.2025.123348', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Peanut shell','Modification': 'Grafted PDM', 'Concentration_wt_percent': 0.15, 'Oil_Type': 'Rapeseed oil', 'Oil_Content_wt_percent': 16.7, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 4.9, 'Zeta_Potential_mV': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2025.140837', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Chlorella algae','Modification': 'HCl hydrolysis', 'Concentration_wt_percent': 0.25, 'Oil_Type': 'Zanthoxylum bungeanum EO', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 1.54, 'Zeta_Potential_mV': -38.98, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.fpsl.2025.101439', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Microcrystalline cellulose','Modification': 'Complex (TEMPO-CNF+PEI)', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Lemon essential oil', 'Oil_Content_wt_percent': 75, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 22.0, 'Zeta_Potential_mV': 25.23, 'Stability_Days': 6, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1088/1755-1315/1488/1/012111', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Unknown','Modification': 'Complex (Sodium Alginate)', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Lemongrass essential oil', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': null, 'Zeta_Potential_mV': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1088/1755-1315/1488/1/012111', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Unknown','Modification': 'Complex (Sodium Alginate)', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Frankincense essential oil', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': null, 'Zeta_Potential_mV': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1088/1755-1315/1488/1/012111', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Unknown','Modification': 'Complex (Sodium Alginate)', 'Concentration_wt_percent': 0.1, 'Oil_Type': 'Patchouli essential oil', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': null, 'Zeta_Potential_mV': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2024.138192', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Cotton','Modification': 'Amine-functionalized', 'Concentration_wt_percent': 3.0, 'Oil_Type': 'Canola oil', 'Oil_Content_wt_percent': 80, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 11.56, 'Zeta_Potential_mV': -19.37, 'Stability_Days': 20, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.molliq.2025.127549', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Eucalyptus waste','Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5, 'Oil_Type': 'Cardamom essential oil', 'Oil_Content_wt_percent': 30, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 58.1, 'Zeta_Potential_mV': -49.9, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.molliq.2025.127549', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Unknown','Modification': null, 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Cardamom essential oil', 'Oil_Content_wt_percent': 20, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 22.1, 'Zeta_Potential_mV': -19.5, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.colsurfa.2025.136393', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Microfibrillated cellulose','Modification': null, 'Concentration_wt_percent': 0.3, 'Oil_Type': 'n-Hexane', 'Oil_Content_wt_percent': 33.3, 'Emulsification_Method': 'Hand shaking + Sonication', 'Droplet_Size_um': 42.0, 'Zeta_Potential_mV': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.ijbiomac.2024.139135', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNF', 'Cellulose_Source': 'Carboxymethyl','Modification': 'Complex (Tannic Acid)', 'Concentration_wt_percent': 1.0, 'Oil_Type': 'Cinnamaldehyde', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 11.4, 'Zeta_Potential_mV': null, 'Stability_Days': 30, 'Electrolyte_Concentration_mM': 0},
+                {'DOI': '10.1016/j.foodhyd.2025.111704', 'Emulsion_Type': 'o/w', 'Type_of_Nanocellulose': 'CNC', 'Cellulose_Source': 'Jujube seeds','Modification': 'Oxidized + Ultrasonicated', 'Concentration_wt_percent': 0.9, 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 10, 'Emulsification_Method': 'High-pressure homogenizer', 'Droplet_Size_um': 2.08, 'Zeta_Potential_mV': -41.3, 'Stability_Days': 28, 'Electrolyte_Concentration_mM': 40}
+            ];
+
+            // --- DATA PROCESSING & SETUP ---
+            let processedData = [];
+            const numericalCols = ['Concentration_wt_percent', 'Oil_Content_wt_percent', 'Droplet_Size_um', 'Zeta_Potential_mV', 'Stability_Days', 'Electrolyte_Concentration_mM'];
+            const categoricalCols = ['Emulsion_Type', 'Type_of_Nanocellulose', 'Cellulose_Source', 'Modification', 'Oil_Type', 'Emulsification_Method', 'Stability_Category'];
+            
+            function preprocessData() {
+                const medianZeta = getMedian(database.map(d => d.Zeta_Potential_mV).filter(v => v !== null));
+                const medianDroplet = getMedian(database.map(d => d.Droplet_Size_um).filter(v => v !== null));
+                const medianStability = getMedian(database.map(d => d.Stability_Days).filter(v => v !== null));
+
+                processedData = database.map(d => {
+                    const stability = d.Stability_Days === null ? medianStability : d.Stability_Days;
+                    let stabilityCategory = 'Unknown';
+                    if (stability >= 30) stabilityCategory = 'High (>30 days)';
+                    else if (stability >= 7) stabilityCategory = 'Medium (7-29 days)';
+                    else if (stability > 0) stabilityCategory = 'Low (1-6 days)';
+                    else stabilityCategory = 'Unstable (<1 day)';
+
+                    return {
+                        ...d,
+                        'Zeta_Potential_mV': d.Zeta_Potential_mV === null ? medianZeta : d.Zeta_Potential_mV,
+                        'Droplet_Size_um': d.Droplet_Size_um === null ? medianDroplet : d.Droplet_Size_um,
+                        'Stability_Days': stability,
+                        'Stability_Category': stabilityCategory
+                    };
+                });
+            }
+            
+            function getMedian(arr) {
+                if (arr.length === 0) return 0;
+                const sorted = arr.slice().sort((a, b) => a - b);
+                const mid = Math.floor(sorted.length / 2);
+                return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+            }
+
+            function populateSelectors() {
+                const allCols = numericalCols.concat(categoricalCols);
+                const xSelect = document.getElementById('x-axis-select');
+                const ySelect = document.getElementById('y-axis-select');
+                const colorSelect = document.getElementById('color-by-select');
+                const filterCatSelect = document.getElementById('filter-category-select');
+                const distCatSelect = document.getElementById('dist-category-select');
+
+                numericalCols.forEach(col => {
+                    xSelect.add(new Option(col, col));
+                    ySelect.add(new Option(col, col));
+                });
+
+                categoricalCols.forEach(col => {
+                    colorSelect.add(new Option(col, col));
+                    filterCatSelect.add(new Option(col, col));
+                    distCatSelect.add(new Option(col, col));
+                });
+                
+                // Set defaults
+                xSelect.value = 'Concentration_wt_percent';
+                ySelect.value = 'Droplet_Size_um';
+                colorSelect.value = 'Type_of_Nanocellulose';
+                filterCatSelect.value = 'Type_of_Nanocellulose';
+                distCatSelect.value = 'Type_of_Nanocellulose';
+                
+                updateFilterValueOptions();
+            }
+            
+            function updateFilterValueOptions() {
+                const filterCat = document.getElementById('filter-category-select').value;
+                const filterValSelect = document.getElementById('filter-value-select');
+                filterValSelect.innerHTML = '<option value="All">All</option>';
+                
+                if (filterCat) {
+                    const uniqueValues = [...new Set(processedData.map(d => d[filterCat]))];
+                    uniqueValues.sort().forEach(val => {
+                        filterValSelect.add(new Option(val, val));
+                    });
+                }
+            }
+            
+            function getFilteredData() {
+                const filterCat = document.getElementById('filter-category-select').value;
+                const filterVal = document.getElementById('filter-value-select').value;
+                if (filterVal === 'All') {
+                    return processedData;
+                }
+                return processedData.filter(d => d[filterCat] == filterVal);
+            }
+
+            // --- PLOTTING FUNCTIONS ---
+            function updateScatterPlot() {
+                const data = getFilteredData();
+                const xVar = document.getElementById('x-axis-select').value;
+                const yVar = document.getElementById('y-axis-select').value;
+                const colorVar = document.getElementById('color-by-select').value;
+                const logX = document.getElementById('log-x-checkbox').checked;
+                const logY = document.getElementById('log-y-checkbox').checked;
+
+                const traces = [];
+                const groups = [...new Set(data.map(d => d[colorVar]))];
+
+                groups.forEach(group => {
+                    const groupData = data.filter(d => d[colorVar] === group);
+                    traces.push({
+                        x: groupData.map(d => d[xVar]),
+                        y: groupData.map(d => d[yVar]),
+                        text: groupData.map(d => `DOI: ${d.DOI}<br>Source: ${d.Cellulose_Source}<br>Modification: ${d.Modification}`),
+                        hoverinfo: 'text+x+y',
+                        mode: 'markers',
+                        type: 'scatter',
+                        name: group,
+                        marker: { size: 10, opacity: 0.8 }
+                    });
+                });
+
+                const layout = {
+                    xaxis: { title: xVar, type: logX ? 'log' : 'linear', autorange: true, gridcolor: '#475569', zerolinecolor: '#475569' },
+                    yaxis: { title: yVar, type: logY ? 'log' : 'linear', autorange: true, gridcolor: '#475569', zerolinecolor: '#475569' },
+                    showlegend: true,
+                    legend: { font: { color: '#e2e8f0' } },
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent',
+                    font: { color: '#e2e8f0' },
+                    margin: { l: 60, r: 20, b: 60, t: 40 }
+                };
+                Plotly.newPlot('interactive-scatter', traces, layout, {responsive: true});
+            }
+
+            function updateDistributionPlot() {
+                const data = getFilteredData();
+                const catVar = document.getElementById('dist-category-select').value;
+
+                const traces = [];
+                const groups = [...new Set(data.map(d => d[catVar]))].sort();
+
+                groups.forEach(group => {
+                    const groupData = data.filter(d => d[catVar] === group);
+                    traces.push({
+                        y: groupData.map(d => d.Droplet_Size_um),
+                        type: 'box',
+                        name: group,
+                        boxpoints: 'all',
+                        jitter: 0.5,
+                        pointpos: -1.8
+                    });
+                });
+
+                const layout = {
+                    yaxis: { title: 'Droplet Size (μm)', zeroline: false, gridcolor: '#475569' },
+                    xaxis: { title: catVar, tickangle: -45 },
+                    showlegend: false,
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent',
+                    font: { color: '#e2e8f0' },
+                     margin: { l: 60, r: 20, b: 120, t: 40 }
+                };
+                Plotly.newPlot('distribution-plot', traces, layout, {responsive: true});
+            }
+
+            function drawHeatmap() {
+                const numData = processedData.map(row => {
+                    let newRow = {};
+                    numericalCols.forEach(col => {
+                        newRow[col] = row[col];
+                    });
+                    return newRow;
+                });
+
+                const columns = numericalCols;
+                const matrix = [];
+                for (let i = 0; i < columns.length; i++) {
+                    const row = [];
+                    for (let j = 0; j < columns.length; j++) {
+                        const col1 = numData.map(d => d[columns[i]]);
+                        const col2 = numData.map(d => d[columns[j]]);
+                        row.push(calculateCorrelation(col1, col2));
+                    }
+                    matrix.push(row);
+                }
+
+                const trace = {
+                    z: matrix,
+                    x: columns,
+                    y: columns,
+                    type: 'heatmap',
+                    colorscale: 'RdBu',
+                    zmin: -1,
+                    zmax: 1
+                };
+
+                const layout = {
+                    title: '',
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent',
+                    font: { color: '#e2e8f0' },
+                    xaxis: { tickangle: -45 },
+                    margin: { l: 150, r: 20, b: 150, t: 40 }
+                };
+
+                Plotly.newPlot('heatmap-plot', [trace], layout, {responsive: true});
+            }
+
+            function calculateCorrelation(x, y) {
+                let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
+                const n = x.length;
+                for (let i = 0; i < n; i++) {
+                    sumX += x[i];
+                    sumY += y[i];
+                    sumXY += (x[i] * y[i]);
+                    sumX2 += (x[i] * x[i]);
+                    sumY2 += (y[i] * y[i]);
+                }
+                const num = (n * sumXY) - (sumX * sumY);
+                const den = Math.sqrt(((n * sumX2) - (sumX * sumX)) * ((n * sumY2) - (sumY * sumY)));
+                return den === 0 ? 0 : num / den;
+            }
+
+            // --- INITIALIZATION & EVENT LISTENERS ---
+            function init() {
+                preprocessData();
+                populateSelectors();
+                
+                // Initial plot draws
+                updateScatterPlot();
+                updateDistributionPlot();
+                drawHeatmap();
+
+                // Attach event listeners
+                document.getElementById('x-axis-select').addEventListener('change', updateScatterPlot);
+                document.getElementById('y-axis-select').addEventListener('change', updateScatterPlot);
+                document.getElementById('color-by-select').addEventListener('change', updateScatterPlot);
+                document.getElementById('filter-category-select').addEventListener('change', () => {
+                    updateFilterValueOptions();
+                    updateScatterPlot();
+                    updateDistributionPlot();
+                });
+                document.getElementById('filter-value-select').addEventListener('change', () => {
+                    updateScatterPlot();
+                    updateDistributionPlot();
+                });
+                document.getElementById('log-x-checkbox').addEventListener('change', updateScatterPlot);
+                document.getElementById('log-y-checkbox').addEventListener('change', updateScatterPlot);
+                document.getElementById('dist-category-select').addEventListener('change', updateDistributionPlot);
+            }
+            
+            init();
+        });
+    </script>
+</body>
+</html>
