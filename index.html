@@ -490,7 +490,10 @@
                 groups.forEach(group => {
                     const groupData = data.filter(d => d[colorVar] === group);
                     traces.push({
-                       text: groupData.map(d => `<b>${d.Title || 'N/A'}</b><br>Authors: ${d.Authors || 'N/A'}<br>Year: ${d.Publication_Year || 'N/A'}<br>DOI: ${d.DOI}<br>--------------------<br>Type: ${d.Cellulose_Type} (${d.Cellulose_Source})<br>Modification: ${d.Modification}`),
+                        x: groupData.map(d => d[xVar]),
+                        y: groupData.map(d => d[yVar]),
+                        customdata: groupData.map(d => d.DOI),
+                        text: groupData.map(d => `<b>${d.Title || 'N/A'}</b><br>Authors: ${d.Authors || 'N/A'}<br>Year: ${d.Publication_Year || 'N/A'}<br>DOI: ${d.DOI}<br>--------------------<br>Type: ${d.Cellulose_Type} (${d.Cellulose_Source})<br>Modification: ${d.Modification}`),
                         hoverinfo: 'text',
                         mode: 'markers',
                         type: 'scatter',
