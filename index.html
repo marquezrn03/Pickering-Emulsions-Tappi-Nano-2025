@@ -8,26 +8,32 @@
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base font for the body */
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Styling for labels within the control panel */
         .control-panel label {
             color: #cbd5e1; /* slate-300 */
         }
+        /* Styling for select and input elements within the control panel */
         .control-panel select, .control-panel input {
             background-color: #334155; /* slate-700 */
             color: #f1f5f9; /* slate-100 */
             border-color: #475569; /* slate-600 */
         }
+        /* Override Plotly's modebar background to be transparent */
         .plotly .modebar {
             background-color: transparent !important;
         }
+        /* Styling for Plotly's modebar buttons */
         .plotly .modebar-btn path {
             fill: #94a3b8 !important; /* slate-400 */
         }
+        /* Styling for plot containers */
         .plot-container {
-             background-color: rgba(15, 23, 42, 0.7); /* slate-900 with some transparency */
-             border-radius: 0.5rem;
+            background-color: rgba(15, 23, 42, 0.7); /* slate-900 with some transparency */
+            border-radius: 0.5rem;
         }
     </style>
 </head>
@@ -35,14 +41,14 @@
 
     <div class="container mx-auto p-4 md:p-6">
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight">From Colloid Science to Industrial Applications: Mapping Research Progress in Nanocellulose-Based Pickering Emulsions</h1>
-            <p class="text-lg text-slate-400 mt-2">Interactive nanocellulose Pickering emulsion data explorer. Authors: Ronald Marquez, Roberto J. Aguado, Blaise Tardy, Marc Delgado Aguilar, Tappi Nano 2025, Girona, Spain </p>
+            <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight">From colloid science to industrial applications: Mapping research progress in nanocellulose-based Pickering emulsions.</h1>
+            <p class="text-lg text-slate-400 mt-2">Authors: Ronald Marquez, Roberto J. Aguado, Blaise Tardy, Marc Delgado Aguilar, Tappi Nano 2025, Girona, Spain</p>
         </header>
 
         <main class="space-y-10">
             <!-- Section 1: Interactive Scatter Plot -->
             <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
-                <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">1. Multi-Dimensional Property Explorer</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">1. Multi-dimensional nanocellulose-emulsion property analysis</h2>
                 <div class="control-panel grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
                     <!-- Axis & Color Controls -->
                     <div>
@@ -67,17 +73,17 @@
                         <select id="filter-value-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
                     </div>
                 </div>
-                 <div class="flex justify-end space-x-4 mb-4">
+                   <div class="flex justify-end space-x-4 mb-4">
                     <label class="flex items-center space-x-2 text-sm cursor-pointer">
                         <input type="checkbox" id="log-x-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
                         <span>Log X-Axis</span>
                     </label>
-                     <label class="flex items-center space-x-2 text-sm cursor-pointer">
+                    <label class="flex items-center space-x-2 text-sm cursor-pointer">
                         <input type="checkbox" id="log-y-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
                         <span>Log Y-Axis</span>
                     </label>
                 </div>
-                 <div id="interactive-scatter" class="w-full h-[600px] plot-container"></div>
+                   <div id="interactive-scatter" class="w-full h-[600px] plot-container"></div>
             </section>
 
             <!-- Section 2 & 3: Side-by-Side Plots -->
@@ -85,19 +91,19 @@
                 <!-- Distribution Analysis -->
                 <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
                     <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">2. Droplet Size Distribution</h2>
-                     <div class="control-panel grid grid-cols-1 gap-4 mb-6">
-                         <div>
-                             <label for="dist-category-select" class="block text-sm font-medium">Group By:</label>
-                             <select id="dist-category-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
-                         </div>
-                     </div>
+                    <div class="control-panel grid grid-cols-1 gap-4 mb-6">
+                        <div>
+                            <label for="dist-category-select" class="block text-sm font-medium">Group By:</label>
+                            <select id="dist-category-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                        </div>
+                    </div>
                     <div id="distribution-plot" class="w-full h-[500px] plot-container"></div>
                 </section>
                 
                 <!-- Correlation Heatmap -->
                 <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
-                     <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">3. Correlation Matrix</h2>
-                     <div id="heatmap-plot" class="w-full h-[552px] plot-container"></div>
+                    <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">3. Correlation Matrix</h2>
+                    <div id="heatmap-plot" class="w-full h-[552px] plot-container"></div>
                 </section>
             </div>
         </main>
@@ -178,6 +184,114 @@
                     'Type_of_Nanocellulose': 'NFC (Bacterial)', 'Modification': 'Dodecanoic Acid (C12)', 'Concentration_wt_percent': 0.12,
                     'Particle_L_nm': '>2000', 'Particle_w_nm': 50, 'Particle_t_nm': 50, 'Aspect_Ratio': '>40', 'Crystallinity_Index': 0.85,
                     'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': 53.4, 'Contact_Angle_deg': 133
+                },
+                {
+                    'DOI': '10.1016/j.foodhyd.2016.06.031', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Cinnamaldehyde', 'Oil_Content_wt_percent': 10.0, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 27.0, 'Stability_Days': '>56', 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'MFC', 'Modification': 'None', 'Concentration_wt_percent': 0.5,
+                    'Particle_L_nm': '>1000', 'Particle_w_nm': null, 'Particle_t_nm': '>30', 'Aspect_Ratio': null, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1016/j.foodhyd.2016.06.031', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Cinnamaldehyde', 'Oil_Content_wt_percent': 10.0, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 13.0, 'Stability_Days': '>56', 'Electrolyte_Concentration_mM': 3,
+                    'Type_of_Nanocellulose': 'CNC (from MCC)', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5,
+                    'Particle_L_nm': 234, 'Particle_w_nm': 30, 'Particle_t_nm': 30, 'Aspect_Ratio': 7.8, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1016/j.colsurfa.2016.04.025', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Dodecane', 'Oil_Content_vol_percent': 35.0, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': null, 'Stability_Days': '>30', 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'CNC', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.38,
+                    'Particle_L_nm': 100, 'Particle_w_nm': 6, 'Particle_t_nm': 6, 'Aspect_Ratio': 17, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_mmol_g': 0.36, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1016/j.colsurfa.2016.04.025', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Dodecane', 'Oil_Content_vol_percent': 35.0, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 18.0, 'Stability_Days': '>30', 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'CNF', 'Modification': 'None', 'Concentration_wt_percent': 0.38,
+                    'Particle_L_nm': '>2000', 'Particle_w_nm': 10, 'Particle_t_nm': 10, 'Aspect_Ratio': '>200', 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': -45.2, 'Surface_Charge_Density_mmol_g': 0.04, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1016/j.colsurfa.2016.04.025', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Dodecane', 'Oil_Content_vol_percent': 35.0, 'Emulsification_Method': 'High-shear homogenizer', 'Droplet_Size_um': 35.0, 'Stability_Days': '>30', 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'NFC (Wood pulp)', 'Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.38,
+                    'Particle_L_nm': 1000, 'Particle_w_nm': 15, 'Particle_t_nm': 15, 'Aspect_Ratio': 67, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': -87.9, 'Surface_Charge_Density_mmol_g': 1.13, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1016/j.carbpol.2017.09.028', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Almond oil', 'Oil_Content_vol_percent': 30.0, 'Emulsification_Method': 'Hand shaking + Sonication', 'Droplet_Size_um': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'NFC (from MCC)', 'Modification': 'None', 'Concentration_wt_percent': 2.0,
+                    'Particle_L_nm': 150, 'Particle_w_nm': 15, 'Particle_t_nm': 15, 'Aspect_Ratio': 10, 'Crystallinity_Index': 0.8,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': 37.4, 'Contact_Angle_deg': 69
+                },
+                {
+                    'DOI': '10.1016/j.carbpol.2017.09.028', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Almond oil', 'Oil_Content_vol_percent': 30.0, 'Emulsification_Method': 'Hand shaking + Sonication', 'Droplet_Size_um': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'HTC (from MCC)', 'Modification': 'None', 'Concentration_wt_percent': 1.0,
+                    'Particle_L_nm': 350, 'Particle_w_nm': 70, 'Particle_t_nm': 7.5, 'Aspect_Ratio': 5, 'Crystallinity_Index': 0.8,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': 47.7, 'Contact_Angle_deg': 43
+                },
+                {
+                    'DOI': '10.1016/j.nanoen.2017.03.010', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Paraffin', 'Oil_Content_wt_percent': 2.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 0.8, 'Stability_Days': '>180', 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'NFC (Wood pulp)', 'Modification': 'TEMPO-oxidized', 'Concentration_wt_percent': 0.2,
+                    'Particle_L_nm': 1000, 'Particle_w_nm': 4, 'Particle_t_nm': 4, 'Aspect_Ratio': 250, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Hexadecane', 'Oil_Content_vol_percent': 20.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 5.0, 'Stability_Days': '>30', 'Electrolyte_Concentration_mM': 50,
+                    'Type_of_Nanocellulose': 'CNC (Wood pulp)', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5,
+                    'Particle_L_nm': null, 'Particle_w_nm': null, 'Particle_t_nm': null, 'Aspect_Ratio': null, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Hexadecane', 'Oil_Content_vol_percent': 20.0, 'Emulsification_Method': 'High-pressure homogenizer', 'Droplet_Size_um': 0.5, 'Stability_Days': '>240', 'Electrolyte_Concentration_mM': 50,
+                    'Type_of_Nanocellulose': 'CNC (Wood pulp)', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.5,
+                    'Particle_L_nm': null, 'Particle_w_nm': null, 'Particle_t_nm': null, 'Aspect_Ratio': null, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Hexadecane', 'Oil_Content_vol_percent': 20.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 30.0, 'Stability_Days': '>30', 'Electrolyte_Concentration_mM': 50,
+                    'Type_of_Nanocellulose': 'CNF (Wood pulp)', 'Modification': 'None', 'Concentration_wt_percent': 0.5,
+                    'Particle_L_nm': null, 'Particle_w_nm': null, 'Particle_t_nm': null, 'Aspect_Ratio': null, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1021/acs.biomac.7b01564', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Hexadecane', 'Oil_Content_vol_percent': 20.0, 'Emulsification_Method': 'High-pressure homogenizer', 'Droplet_Size_um': 5.0, 'Stability_Days': '>240', 'Electrolyte_Concentration_mM': 50,
+                    'Type_of_Nanocellulose': 'CNF (Wood pulp)', 'Modification': 'None', 'Concentration_wt_percent': 0.5,
+                    'Particle_L_nm': null, 'Particle_w_nm': null, 'Particle_t_nm': null, 'Aspect_Ratio': null, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1016/j.carbpol.2017.12.085', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 20.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 5.0, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 50,
+                    'Type_of_Nanocellulose': 'CNC-I (from MCC)', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.2,
+                    'Particle_L_nm': 201, 'Particle_w_nm': 16.4, 'Particle_t_nm': 8, 'Aspect_Ratio': 12.3, 'Crystallinity_Index': 0.71,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': 0.121, 'Surface_Energy_mJ_m2': 57.95, 'Contact_Angle_deg': 44.1
+                },
+                {
+                    'DOI': '10.1016/j.carbpol.2017.12.085', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Hexadecane', 'Oil_Content_wt_percent': 20.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 10.0, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 50,
+                    'Type_of_Nanocellulose': 'CNC-II (from MCC)', 'Modification': 'Mercerized', 'Concentration_wt_percent': 0.2,
+                    'Particle_L_nm': 18.8, 'Particle_w_nm': 10.9, 'Particle_t_nm': 6, 'Aspect_Ratio': 1.7, 'Crystallinity_Index': 0.73,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': 0.103, 'Surface_Energy_mJ_m2': 67.96, 'Contact_Angle_deg': 26.9
+                },
+                {
+                    'DOI': '10.3389/fchem.2018.00409', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Hexadecane', 'Oil_Content_vol_percent': 20.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 2.5, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 0,
+                    'Type_of_Nanocellulose': 'CNC (Wood pulp)', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 3.0,
+                    'Particle_L_nm': 138, 'Particle_w_nm': 8, 'Particle_t_nm': 8, 'Aspect_Ratio': 17, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': -70.0, 'Surface_Charge_Density_e_nm2': 0.11, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.3389/fchem.2018.00409', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Canola oil', 'Oil_Content_vol_percent': 20.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': null, 'Stability_Days': null, 'Electrolyte_Concentration_mM': 100,
+                    'Type_of_Nanocellulose': 'CNC (Wood pulp)', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.1,
+                    'Particle_L_nm': 138, 'Particle_w_nm': 8, 'Particle_t_nm': 8, 'Aspect_Ratio': 17, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': 0.11, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1039/C8GC00134K', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 10.0, 'Emulsification_Method': 'Sonication', 'Droplet_Size_um': 2.2, 'Stability_Days': '>210', 'Electrolyte_Concentration_mM': 27,
+                    'Type_of_Nanocellulose': 'CNC (Cotton)', 'Modification': 'Sulfate groups', 'Concentration_wt_percent': 0.41,
+                    'Particle_L_nm': 174, 'Particle_w_nm': 8, 'Particle_t_nm': 8, 'Aspect_Ratio': 22, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
+                },
+                {
+                    'DOI': '10.1039/C8GC00134K', 'Emulsion_Type': 'o/w', 'Oil_Type': 'Sunflower oil', 'Oil_Content_wt_percent': 1.0, 'Emulsification_Method': 'Sonication + Vortex', 'Droplet_Size_um': 2.2, 'Stability_Days': '>210', 'Electrolyte_Concentration_mM': 27,
+                    'Type_of_Nanocellulose': 'Complex (CNC + CNF)', 'Modification': 'Sulfate groups (CNC) / None (CNF)', 'Concentration_wt_percent': 0.55,
+                    'Particle_L_nm': null, 'Particle_w_nm': null, 'Particle_t_nm': null, 'Aspect_Ratio': null, 'Crystallinity_Index': null,
+                    'Zeta_Potential_mV': null, 'Surface_Charge_Density_e_nm2': null, 'Surface_Energy_mJ_m2': null, 'Contact_Angle_deg': null
                 }
             ];
 
@@ -188,55 +302,97 @@
                 {"DOI":"10.1021/bm400854n", "Title":"Dispersibility and Emulsion-Stabilizing Effect of Cellulose Nanowhiskers Esterified by Vinyl Acetate and Vinyl Cinnamate", "Authors":"Sèbe, G., et al.", "Publication_Year":2013},
                 {"DOI":"10.1039/c2sm26472b", "Title":"Cellulosic nanorods of various aspect ratios for oil in water Pickering emulsions", "Authors":"Kalashnikova, I., et al.", "Publication_Year":2013},
                 {"DOI":"10.1021/la5017577", "Title":"Preparation of Double Pickering Emulsions Stabilized by Chemically Tailored Nanocelluloses", "Authors":"Cunha, A. G., et al.", "Publication_Year":2014},
-                {"DOI":"10.1021/la4032514", "Title":"Phase Behavior of Medium and High Internal Phase Water-in-Oil Emulsions Stabilized Solely by Hydrophobized Bacterial Cellulose Nanofibrils", "Authors":"Lee, K.-Y., et al.", "Publication_Year":2014}
+                {"DOI":"10.1021/la4032514", "Title":"Phase Behavior of Medium and High Internal Phase Water-in-Oil Emulsions Stabilized Solely by Hydrophobized Bacterial Cellulose Nanofibrils", "Authors":"Lee, K.-Y., et al.", "Publication_Year":2014},
+                {"DOI":"10.1016/j.foodhyd.2016.06.031", "Title":"On the preparation and antibacterial activity of emulsions stabilized with nanocellulose particles", "Authors":"Mikulcová, V., et al.", "Publication_Year":2016},
+                {"DOI":"10.1016/j.colsurfa.2016.04.025", "Title":"Phase behaviour and droplet size of oil-in-water Pickering emulsions stabilised with plant-derived nanocellulosic materials", "Authors":"Gestranius, M., et al.", "Publication_Year":2016},
+                {"DOI":"10.1016/j.carbpol.2017.09.028", "Title":"The chemical-free production of nanocelluloses from microcrystalline cellulose and their use as Pickering emulsion stabilizer", "Authors":"Buffiere, J., et al.", "Publication_Year":2017},
+                {"DOI":"10.1016/j.nanoen.2017.03.010", "Title":"Cellulose nanofibers enable paraffin encapsulation and the formation of stable thermal regulation nanocomposites", "Authors":"Li, Y., et al.", "Publication_Year":2017},
+                {"DOI":"10.1021/acs.biomac.7b01564", "Title":"Design of Pickering micro and nanoemulsions based on the structural characteristics of nanocelluloses", "Authors":"Jiménez Saelices, C., et al.", "Publication_Year":2018},
+                {"DOI":"10.1016/j.carbpol.2017.12.085", "Title":"Cellulose nanocrystals (CNCs) with different crystalline allomorph for oil in water Pickering emulsions", "Authors":"Li, X., et al.", "Publication_Year":2018},
+                {"DOI":"10.3389/fchem.2018.00409", "Title":"Pickering Emulsions Electrostatically Stabilized by Cellulose Nanocrystals", "Authors":"Varanasi, S., et al.", "Publication_Year":2018},
+                {"DOI":"10.1039/C8GC00134K", "Title":"Pickering emulsions by combining cellulose nanofibrils and nanocrystals: Phase behavior and depletion stabilization", "Authors":"Bai, L., et al.", "Publication_Year":2018}
             ];
 
 
             // --- DATA PROCESSING & SETUP ---
             let processedData = [];
+            // Define numerical columns that can be plotted on axes or used in correlation
             const numericalCols = [
-                'Oil_Content_vol_percent', 'Droplet_Size_um', 'Electrolyte_Concentration_mM', 
+                'Oil_Content_vol_percent', 'Oil_Content_wt_percent', 'Droplet_Size_um', 'Electrolyte_Concentration_mM', 
                 'Concentration_wt_percent', 'Particle_L_nm', 'Particle_w_nm', 'Particle_t_nm', 
                 'Aspect_Ratio', 'Crystallinity_Index', 'Zeta_Potential_mV', 
-                'Surface_Charge_Density_e_nm2', 'Surface_Energy_mJ_m2', 'Contact_Angle_deg',
+                'Surface_Charge_Density_e_nm2', 'Surface_Charge_Density_mmol_g', 'Surface_Energy_mJ_m2', 'Contact_Angle_deg',
                 'Publication_Year'
             ];
+            // Define categorical columns used for coloring or filtering
             const categoricalCols = [
                 'Emulsion_Type', 'Oil_Type', 'Emulsification_Method', 'Stability_Days',
                 'Type_of_Nanocellulose', 'Modification', 'Cellulose_Type', 'Cellulose_Source'
             ];
             
+            /**
+             * Calculates the median of an array of numbers, handling string values with '>' or '<' prefixes.
+             * @param {Array<number|string>} arr - The input array.
+             * @returns {number} The median value, or 0 if the array is empty or contains no valid numbers.
+             */
             function getMedian(arr) {
                 if (!arr || arr.length === 0) return 0;
-                const sorted = arr.map(v => parseFloat(String(v).replace('>', ''))).filter(v => v !== null && !isNaN(v)).slice().sort((a, b) => a - b);
+                // Filter out non-numeric values and parse strings like '>60'
+                const sorted = arr.map(v => parseFloat(String(v).replace('>', '').replace('<', ''))).filter(v => v !== null && !isNaN(v)).slice().sort((a, b) => a - b);
                 if (sorted.length === 0) return 0;
                 const mid = Math.floor(sorted.length / 2);
                 return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
             }
 
+            /**
+             * Preprocesses the raw database and publication data.
+             * - Merges publication info based on DOI.
+             * - Derives 'Cellulose_Type' and 'Cellulose_Source'.
+             * - Parses numeric fields, handling string representations and imputing missing values with medians.
+             * @param {Array<Object>} db - The raw experimental database.
+             * @param {Array<Object>} pubData - The enriched publication data.
+             * @returns {Array<Object>} The processed data array.
+             */
             function preprocessData(db, pubData) {
                 const pubMap = new Map(pubData.map(p => [p.DOI, p]));
 
-                // Calculate medians for imputation, handling string values like '>60'
+                // Calculate medians for imputation for key numerical fields
                 const medianDroplet = getMedian(db.map(d => d.Droplet_Size_um));
                 const medianAspectRatio = getMedian(db.map(d => d.Aspect_Ratio));
+                // Add medians for other new or frequently missing numerical columns if needed
+                const medianParticleL = getMedian(db.map(d => d.Particle_L_nm));
+                const medianParticleW = getMedian(db.map(d => d.Particle_w_nm));
+                const medianParticleT = getMedian(db.map(d => d.Particle_t_nm));
+                const medianSurfaceChargeE = getMedian(db.map(d => d.Surface_Charge_Density_e_nm2));
+                const medianSurfaceChargeMmol = getMedian(db.map(d => d.Surface_Charge_Density_mmol_g));
+                const medianSurfaceEnergy = getMedian(db.map(d => d.Surface_Energy_mJ_m2));
+                const medianContactAngle = getMedian(db.map(d => d.Contact_Angle_deg));
+                const medianCrystallinity = getMedian(db.map(d => d.Crystallinity_Index));
+                const medianZetaPotential = getMedian(db.map(d => d.Zeta_Potential_mV));
+                const medianOilContentVol = getMedian(db.map(d => d.Oil_Content_vol_percent));
+                const medianOilContentWt = getMedian(db.map(d => d.Oil_Content_wt_percent));
+
 
                 return db.map(d => {
                     const pubInfo = pubMap.get(d.DOI) || {};
                     let rawType = d.Type_of_Nanocellulose || '';
+                    // Standardize NFC to CNF
                     rawType = rawType.replace('NFC', 'CNF');
                     
                     let celluloseType = 'Unknown';
                     if (rawType.includes('CNC')) celluloseType = 'CNC';
                     else if (rawType.includes('CNF')) celluloseType = 'CNF';
-                    
+                    else if (rawType.includes('MFC')) celluloseType = 'MFC'; // Handle Microfibrillated Cellulose
+                    else if (rawType.includes('HTC')) celluloseType = 'HTC'; // Handle Hydrothermal Carbonization Cellulose
+                    else if (rawType.includes('Complex')) celluloseType = 'Complex'; // Handle Complex types
+
                     let celluloseSource = 'Unknown';
-                    const match = rawType.match(/\(([^)]+)\)/);
+                    const match = rawType.match(/\(([^)]+)\)/); // Extract content within parentheses
                     if (match) {
                         celluloseSource = match[1].split(',')[0].replace('from ', '').trim();
                     }
                     
-                    // Helper to parse potentially numeric fields with symbols
+                    // Helper to parse potentially numeric fields with symbols (e.g., '>', '<')
                     const parseNumeric = (value, median) => {
                         if (value === null || value === undefined) return median;
                         if (typeof value === 'string') {
@@ -251,17 +407,27 @@
                         ...pubInfo,
                         Cellulose_Type: celluloseType,
                         Cellulose_Source: celluloseSource,
+                        // Parse and impute numerical values
                         Droplet_Size_um: parseNumeric(d.Droplet_Size_um, medianDroplet),
                         Aspect_Ratio: parseNumeric(d.Aspect_Ratio, medianAspectRatio),
-                        // Convert other potentially stringified numbers
-                        Particle_L_nm: parseNumeric(d.Particle_L_nm, null),
-                        Particle_w_nm: parseNumeric(d.Particle_w_nm, null),
-                        Particle_t_nm: parseNumeric(d.Particle_t_nm, null),
-                        Surface_Charge_Density_e_nm2: parseNumeric(d.Surface_Charge_Density_e_nm2, null),
+                        Particle_L_nm: parseNumeric(d.Particle_L_nm, medianParticleL),
+                        Particle_w_nm: parseNumeric(d.Particle_w_nm, medianParticleW),
+                        Particle_t_nm: parseNumeric(d.Particle_t_nm, medianParticleT),
+                        Crystallinity_Index: parseNumeric(d.Crystallinity_Index, medianCrystallinity),
+                        Zeta_Potential_mV: parseNumeric(d.Zeta_Potential_mV, medianZetaPotential),
+                        Surface_Charge_Density_e_nm2: parseNumeric(d.Surface_Charge_Density_e_nm2, medianSurfaceChargeE),
+                        Surface_Charge_Density_mmol_g: parseNumeric(d.Surface_Charge_Density_mmol_g, medianSurfaceChargeMmol),
+                        Surface_Energy_mJ_m2: parseNumeric(d.Surface_Energy_mJ_m2, medianSurfaceEnergy),
+                        Contact_Angle_deg: parseNumeric(d.Contact_Angle_deg, medianContactAngle),
+                        Oil_Content_vol_percent: parseNumeric(d.Oil_Content_vol_percent, medianOilContentVol),
+                        Oil_Content_wt_percent: parseNumeric(d.Oil_Content_wt_percent, medianOilContentWt)
                     };
                 });
             }
             
+            /**
+             * Populates the dropdown selectors with available numerical and categorical columns.
+             */
             function populateSelectors() {
                 const xSelect = document.getElementById('x-axis-select');
                 const ySelect = document.getElementById('y-axis-select');
@@ -269,19 +435,23 @@
                 const filterCatSelect = document.getElementById('filter-category-select');
                 const distCatSelect = document.getElementById('dist-category-select');
 
+                // Clear existing options
                 [xSelect, ySelect, colorSelect, filterCatSelect, distCatSelect].forEach(s => s.innerHTML = '');
 
+                // Add numerical columns to X and Y axis selectors
                 numericalCols.forEach(col => {
                     xSelect.add(new Option(col, col));
                     ySelect.add(new Option(col, col));
                 });
 
+                // Add categorical columns to color-by, filter-category, and distribution category selectors
                 categoricalCols.forEach(col => {
                     colorSelect.add(new Option(col, col));
                     filterCatSelect.add(new Option(col, col));
                     distCatSelect.add(new Option(col, col));
                 });
                 
+                // Set initial default selections
                 xSelect.value = 'Concentration_wt_percent';
                 ySelect.value = 'Droplet_Size_um';
                 colorSelect.value = 'Cellulose_Type';
@@ -291,12 +461,16 @@
                 updateFilterValueOptions();
             }
             
+            /**
+             * Updates the options in the filter value dropdown based on the selected filter category.
+             */
             function updateFilterValueOptions() {
                 const filterCat = document.getElementById('filter-category-select').value;
                 const filterValSelect = document.getElementById('filter-value-select');
-                filterValSelect.innerHTML = '<option value="All">All</option>';
+                filterValSelect.innerHTML = '<option value="All">All</option>'; // Always include 'All' option
                 
                 if (filterCat && processedData.length > 0) {
+                    // Get unique values for the selected category from the processed data
                     const uniqueValues = [...new Set(processedData.map(d => d[filterCat]))];
                     uniqueValues.sort().forEach(val => {
                         if (val) filterValSelect.add(new Option(val, val));
@@ -304,15 +478,23 @@
                 }
             }
             
+            /**
+             * Returns the data filtered by the selected category and value.
+             * @returns {Array<Object>} The filtered data.
+             */
             function getFilteredData() {
                 const filterCat = document.getElementById('filter-category-select').value;
                 const filterVal = document.getElementById('filter-value-select').value;
                 if (filterVal === 'All' || !filterCat) {
-                    return processedData;
+                    return processedData; // If 'All' is selected or no category, return all data
                 }
+                // Filter data based on selected category and value
                 return processedData.filter(d => d[filterCat] == filterVal);
             }
 
+            /**
+             * Updates all plots on the page.
+             */
             function updateAllPlots() {
                 updateScatterPlot();
                 updateDistributionPlot();
@@ -320,6 +502,10 @@
             }
 
             // --- PLOTTING FUNCTIONS ---
+
+            /**
+             * Updates and renders the interactive scatter plot.
+             */
             function updateScatterPlot() {
                 const data = getFilteredData();
                 const xVar = document.getElementById('x-axis-select').value;
@@ -329,6 +515,7 @@
                 const logY = document.getElementById('log-y-checkbox').checked;
 
                 const traces = [];
+                // Group data by the selected color variable
                 const groups = [...new Set(data.map(d => d[colorVar]))];
 
                 groups.forEach(group => {
@@ -336,12 +523,13 @@
                     traces.push({
                         x: groupData.map(d => d[xVar]),
                         y: groupData.map(d => d[yVar]),
-                        customdata: groupData.map(d => d.DOI),
+                        customdata: groupData.map(d => d.DOI), // Store DOI for click events
+                        // Custom hover text for detailed information
                         text: groupData.map(d => `<b>${d.Title || 'N/A'}</b><br>Authors: ${d.Authors || 'N/A'}<br>Year: ${d.Publication_Year || 'N/A'}<br>DOI: ${d.DOI}<br>--------------------<br>Type: ${d.Cellulose_Type} (${d.Cellulose_Source})<br>Concentration: ${d.Concentration_wt_percent} wt%<br>Aspect Ratio: ${d.Aspect_Ratio}`),
                         hoverinfo: 'text',
                         mode: 'markers',
                         type: 'scatter',
-                        name: group || 'N/A',
+                        name: group || 'N/A', // Legend name
                         marker: { size: 10, opacity: 0.8 }
                     });
                 });
@@ -350,7 +538,7 @@
                     xaxis: { title: xVar, type: logX ? 'log' : 'linear', autorange: true, gridcolor: '#475569', zerolinecolor: '#475569' },
                     yaxis: { title: yVar, type: logY ? 'log' : 'linear', autorange: true, gridcolor: '#475569', zerolinecolor: '#475569' },
                     showlegend: true,
-                    legend: { font: { color: '#e2e8f0' }, orientation: 'h', y: -0.2},
+                    legend: { font: { color: '#e2e8f0' }, orientation: 'h', y: -0.2}, // Horizontal legend at the bottom
                     paper_bgcolor: 'transparent',
                     plot_bgcolor: 'transparent',
                     font: { color: '#e2e8f0' },
@@ -359,11 +547,15 @@
                 Plotly.newPlot('interactive-scatter', traces, layout, {responsive: true});
             }
 
+            /**
+             * Updates and renders the droplet size distribution box plot.
+             */
             function updateDistributionPlot() {
                 const data = getFilteredData();
                 const catVar = document.getElementById('dist-category-select').value;
 
                 const traces = [];
+                // Get unique groups for the selected categorical variable
                 const groups = [...new Set(data.map(d => d[catVar]))].sort();
 
                 groups.forEach(group => {
@@ -372,36 +564,55 @@
                         y: groupData.map(d => d.Droplet_Size_um),
                         type: 'box',
                         name: group || 'N/A',
-                        boxpoints: 'all',
-                        jitter: 0.5,
-                        pointpos: -1.8,
+                        boxpoints: 'all', // Show all data points
+                        jitter: 0.5, // Spread points horizontally
+                        pointpos: -1.8, // Position of jittered points
                     });
                 });
 
                 const layout = {
                     yaxis: { title: 'Droplet Size (μm)', zeroline: false, gridcolor: '#475569', type: 'log', autorange: true },
-                    xaxis: { title: catVar, tickangle: -45 },
+                    xaxis: { title: catVar, tickangle: -45 }, // Rotate x-axis labels for readability
                     showlegend: false,
                     paper_bgcolor: 'transparent',
                     plot_bgcolor: 'transparent',
                     font: { color: '#e2e8f0' },
-                     margin: { l: 60, r: 20, b: 120, t: 40 },
-                     colorway: ['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A', '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', '#FECB52']
+                    margin: { l: 60, r: 20, b: 120, t: 40 }, // Adjust bottom margin for rotated labels
+                    colorway: ['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A', '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', '#FECB52']
                 };
                 Plotly.newPlot('distribution-plot', traces, layout, {responsive: true});
             }
 
+            /**
+             * Draws the correlation heatmap for numerical columns.
+             */
             function drawHeatmap() {
+                // Prepare numerical data, replacing null/undefined with NaN for correlation calculation
                 const numData = processedData.map(row => {
                     let newRow = {};
                     numericalCols.forEach(col => {
                         newRow[col] = (row[col] === null || row[col] === undefined) ? NaN : row[col];
                     });
+                    // Ensure any other numeric columns not explicitly in numericalCols are also included
+                    Object.keys(row).forEach(key => {
+                        if (typeof row[key] === 'number' && !numericalCols.includes(key)) {
+                            newRow[key] = row[key];
+                        }
+                    });
                     return newRow;
                 });
 
-                const columns = numericalCols.filter(c => c !== 'Publication_Year');
+                // Dynamically get all numerical columns that have at least one valid number for correlation
+                const columns = [...new Set(numData.flatMap(d => Object.keys(d)))]
+                    .filter(col => {
+                        // Check if the column exists and has at least one non-NaN numeric value
+                        const values = numData.map(d => d[col]).filter(v => typeof v === 'number' && !isNaN(v));
+                        return values.length > 1; // Need at least two data points to calculate correlation
+                    })
+                    .sort(); // Sort columns alphabetically for consistent display
+
                 const matrix = [];
+                // Calculate correlation matrix
                 for (let i = 0; i < columns.length; i++) {
                     const row = [];
                     for (let j = 0; j < columns.length; j++) {
@@ -417,26 +628,34 @@
                     x: columns,
                     y: columns,
                     type: 'heatmap',
-                    colorscale: 'RdBu',
+                    colorscale: 'RdBu', // Red-Blue color scale for correlations (-1 to 1)
                     zmin: -1,
                     zmax: 1
                 };
 
                 const layout = {
-                    title: '',
+                    title: '', // Title can be added here if desired
                     paper_bgcolor: 'transparent',
                     plot_bgcolor: 'transparent',
                     font: { color: '#e2e8f0' },
-                    xaxis: { tickangle: -45 },
-                    margin: { l: 150, r: 20, b: 150, t: 40 }
+                    xaxis: { tickangle: -45 }, // Rotate x-axis labels
+                    margin: { l: 150, r: 20, b: 150, t: 40 } // Adjust margins for labels
                 };
 
                 Plotly.newPlot('heatmap-plot', [trace], layout, {responsive: true});
             }
 
+            /**
+             * Calculates the Pearson correlation coefficient between two arrays.
+             * Handles NaN values by excluding pairs where either value is NaN.
+             * @param {Array<number>} x - The first array of numbers.
+             * @param {Array<number>} y - The second array of numbers.
+             * @returns {number} The correlation coefficient, or 0 if not enough valid pairs.
+             */
             function calculateCorrelation(x, y) {
+                // Filter out pairs where either x or y value is NaN
                 const validPairs = x.map((val, i) => [val, y[i]]).filter(([valX, valY]) => !isNaN(valX) && !isNaN(valY));
-                if (validPairs.length < 2) return 0;
+                if (validPairs.length < 2) return 0; // Need at least two valid pairs for correlation
 
                 const n = validPairs.length;
                 let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
@@ -456,11 +675,15 @@
 
             // --- INITIALIZATION & EVENT LISTENERS ---
             function init() {
+                // Preprocess data once on initialization
                 processedData = preprocessData(database, publicationData);
+                // Populate all dropdown selectors
                 populateSelectors();
                 
+                // Draw all plots initially
                 updateAllPlots();
 
+                // Event listener for clicking on scatter plot points to open DOI link
                 const scatterPlot = document.getElementById('interactive-scatter');
                 scatterPlot.on('plotly_click', function(data) {
                     if (data.points.length > 0) {
@@ -468,6 +691,7 @@
                         const doi = point.customdata;
                         if (doi) {
                             let url;
+                            // Handle SSRN DOIs differently
                             if (doi.startsWith('SSRN:')) {
                                 const abstractId = doi.replace('SSRN:', '').trim();
                                 url = `https://papers.ssrn.com/sol3/papers.cfm?abstract_id=${abstractId}`;
@@ -475,24 +699,25 @@
                                 url = `https://doi.org/${doi}`;
                             }
                             
-                            // Create a temporary link and click it to open in a new tab
-                            // This is more robust in sandboxed/iframe environments
+                            // Create a temporary link and click it to open in a new tab.
+                            // This is a robust method for opening new tabs in sandboxed/iframe environments.
                             const link = document.createElement('a');
                             link.href = url;
-                            link.target = '_blank';
+                            link.target = '_blank'; // Open in a new tab
                             document.body.appendChild(link);
                             link.click();
-                            document.body.removeChild(link);
+                            document.body.removeChild(link); // Clean up the temporary link
                         }
                     }
                 });
 
+                // Add event listeners for control changes to update plots
                 document.getElementById('x-axis-select').addEventListener('change', updateScatterPlot);
                 document.getElementById('y-axis-select').addEventListener('change', updateScatterPlot);
                 document.getElementById('color-by-select').addEventListener('change', updateScatterPlot);
                 document.getElementById('filter-category-select').addEventListener('change', () => {
-                    updateFilterValueOptions();
-                    updateAllPlots();
+                    updateFilterValueOptions(); // Update filter values when category changes
+                    updateAllPlots(); // Redraw all plots
                 });
                 document.getElementById('filter-value-select').addEventListener('change', updateAllPlots);
                 document.getElementById('log-x-checkbox').addEventListener('change', updateScatterPlot);
@@ -500,6 +725,7 @@
                 document.getElementById('dist-category-select').addEventListener('change', updateDistributionPlot);
             }
             
+            // Initialize the application when the DOM is fully loaded
             init();
         });
     </script>
