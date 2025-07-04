@@ -36,7 +36,7 @@
     <div class="container mx-auto p-4 md:p-6">
         <header class="text-center mb-10">
             <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight">From colloid science to industrial applications: Mapping research progress in nanocellulose-based Pickering emulsions.</h1>
-            <p class="text-lg text-slate-400 mt-2"> This interactive platform presents a curated database of over 80 scientific articles on nanocellulose-stabilized Pickering emulsions. The goal is to provide researchers, students, and industry professionals with a tool to explore the relationships between nanocellulose properties (type, modification, concentration), emulsification conditions, and the resulting emulsion characteristics (droplet size, stability). Use the interactive controls to visualize trends, identify knowledge gaps, and accelerate the development of new applications. This work was presented at Tappi Nano 2025, Girona, Spain. Authors: Ronald Marquez, Roberto J. Aguado, Blaise Tardy, Marc Delgado Aguilar, Tappi Nano 2025, Girona, Spain</p>
+            <p class="text-lg text-slate-400 mt-4 max-w-4xl mx-auto">This interactive platform presents a curated database of over 80 scientific articles on nanocellulose-stabilized Pickering emulsions. The goal is to provide researchers, students, and industry professionals with a tool to explore the relationships between nanocellulose properties (type, modification, concentration), emulsification conditions, and the resulting emulsion characteristics (droplet size, stability). Use the interactive controls to visualize trends, identify knowledge gaps, and accelerate the development of new applications. This work was presented at Tappi Nano 2025, Girona, Spain. Authors: Ronald Marquez, Roberto J. Aguado, Blaise Tardy, Marc Delgado Aguilar.</p>
         </header>
 
         <main class="space-y-10">
@@ -44,8 +44,8 @@
             <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
                 <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">1. Nanocellulose-stabilized Pickering emulsion property meta-analysis</h2>
                 <p class="text-slate-400 mb-6 text-base">
-    Explore the relationship between any two variables from the database. Use the dropdown menus to select parameters for the X and Y axes. You can color the data points by a specific category (e.g., nanocellulose type) and filter the data to isolate subsets of interest. Check the "Log" boxes to switch to a logarithmic scale, which is ideal for visualizing data spanning several orders of magnitude. Click on any point to open the original article in a new tab.
-</p>
+                    Explore the relationship between any two variables from the database. Use the dropdown menus to select parameters for the X and Y axes. You can color the data points by a specific category (e.g., nanocellulose type) and filter the data to isolate subsets of interest. Check the "Log" boxes to switch to a logarithmic scale, which is ideal for visualizing data spanning several orders of magnitude. Click on any point to open the original article in a new tab.
+                </p>
                 <div class="control-panel grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
                     <!-- Axis & Color Controls -->
                     <div>
@@ -70,42 +70,31 @@
                         <select id="filter-value-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
                     </div>
                 </div>
-                 <div class="flex justify-end space-x-4 mb-4">
-                     </div>
 
-            <div class="flex justify-between items-center mb-6">
-                <div class="flex space-x-4">
-                    <label class="flex items-center space-x-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="log-x-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
-                        <span>Log X-Axis</span>
-                    </label>
-                    <label class="flex items-center space-x-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="log-y-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
-                        <span>Log Y-Axis</span>
-                    </label>
+                <!-- CORRECTED: Checkboxes and Download Button in one container -->
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex space-x-4">
+                        <label class="flex items-center space-x-2 text-sm cursor-pointer">
+                            <input type="checkbox" id="log-x-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
+                            <span>Log X-Axis</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm cursor-pointer">
+                            <input type="checkbox" id="log-y-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
+                            <span>Log Y-Axis</span>
+                        </label>
+                    </div>
+                    <div>
+                        <button id="download-csv-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-800 transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 9.707a1 1 0 011.414 0L10 12.001l2.293-2.294a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 9.586V4a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Download Data (CSV)
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <button id="download-csv-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-800 transition-colors duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 9.707a1 1 0 011.414 0L10 12.001l2.293-2.294a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 9.586V4a1 1 0 011-1z" clip-rule="evenodd" />
-                        </svg>
-                        Download Data (CSV)
-                    </button>
-                </div>
-            </div>
-            <div id="interactive-scatter" class="w-full h-[600px] plot-container"></div>
-       </section>
-                    <label class="flex items-center space-x-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="log-x-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
-                        <span>Log X-Axis</span>
-                    </label>
-                     <label class="flex items-center space-x-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="log-y-checkbox" class="h-4 w-4 rounded bg-slate-700 border-slate-600 text-indigo-600 focus:ring-indigo-500">
-                        <span>Log Y-Axis</span>
-                    </label>
-                </div>
-                 <div id="interactive-scatter" class="w-full h-[600px] plot-container"></div>
+
+                <div id="interactive-scatter" class="w-full h-[600px] plot-container"></div>
             </section>
 
             <!-- Section 2 & 3: Side-by-Side Plots -->
@@ -114,41 +103,44 @@
                 <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
                     <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">2. Droplet Size Distribution</h2>
                     <p class="text-slate-400 mb-6 text-base">
-    This box plot shows the distribution of the emulsion droplet size (in micrometers) grouped by different categories. It allows for a visual comparison of how a categorical variable (e.g., emulsification method, oil type) influences the median droplet size and the variability of results reported in the literature.
-</p> <div class="control-panel grid grid-cols-1 gap-4 mb-6">
-                         <div>
-                             <label for="dist-category-select" class="block text-sm font-medium">Group By:</label>
-                             <select id="dist-category-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
-                         </div>
-                     </div>
+                        This box plot shows the distribution of the emulsion droplet size (in micrometers) grouped by different categories. It allows for a visual comparison of how a categorical variable (e.g., emulsification method, oil type) influences the median droplet size and the variability of results reported in the literature.
+                    </p>
+                    <div class="control-panel grid grid-cols-1 gap-4 mb-6">
+                        <div>
+                            <label for="dist-category-select" class="block text-sm font-medium">Group By:</label>
+                            <select id="dist-category-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                        </div>
+                    </div>
                     <div id="distribution-plot" class="w-full h-[500px] plot-container"></div>
                 </section>
                 
                 <!-- Correlation Heatmap -->
                 <section class="bg-slate-800/50 p-6 rounded-xl shadow-2xl ring-1 ring-white/10">
-                     <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">3. Correlation Matrix</h2>
+                    <h2 class="text-2xl font-semibold mb-4 text-white border-b border-slate-700 pb-3">3. Correlation Matrix</h2>
                     <p class="text-slate-400 mb-6 text-base">
-    This heatmap visualizes the Pearson correlation coefficient between all numerical variables in the database. Warm colors (red) indicate a strong positive correlation (as one variable increases, the other tends to increase as well), while cool colors (blue) indicate a strong negative correlation. A value near zero (white) suggests an absence of a linear correlation.
-</p> 
+                        This heatmap visualizes the Pearson correlation coefficient between all numerical variables in the database. Warm colors (red) indicate a strong positive correlation, while cool colors (blue) indicate a strong negative correlation. A value near zero (white) suggests an absence of a linear correlation.
+                    </p>
                     <div id="heatmap-plot" class="w-full h-[552px] plot-container"></div>
                 </section>
             </div>
         </main>
     </div>
-<footer class="text-center mt-12 mb-6 text-slate-500 text-sm">
-    <p>
-        Database and visualization created by Ronald Marquez, Roberto J. Aguado, Blaise Tardy, and Marc Delgado Aguilar (2025).
-    </p>
-    <p class="mt-2">
-        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="hover:text-slate-300">
-            <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by.svg" style="display:inline-block; height: 22px; margin-right: 5px;" alt="CC BY 4.0 icon"/>
-            This database is licensed under a Creative Commons Attribution 4.0 International License.
-        </a>
-    </p>
-    <p class="mt-1">
-        This means you are free to share and adapt the data for any purpose, provided you give appropriate credit.
-    </p>
-</footer>
+
+    <footer class="text-center mt-12 mb-6 text-slate-500 text-sm">
+        <p>
+            Database and visualization created by Ronald Marquez, Roberto J. Aguado, Blaise Tardy, and Marc Delgado Aguilar (2025).
+        </p>
+        <p class="mt-2">
+            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="hover:text-slate-300">
+                <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by.svg" style="display:inline-block; height: 22px; margin-right: 5px;" alt="CC BY 4.0 icon"/>
+                This database is licensed under a Creative Commons Attribution 4.0 International License.
+            </a>
+        </p>
+        <p class="mt-1">
+            This means you are free to share and adapt the data for any purpose, provided you give appropriate credit.
+        </p>
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // --- UPDATED EXPERIMENTAL DATA SOURCE ---
@@ -326,53 +318,40 @@
                 'Emulsion_Type', 'Oil_Type', 'Emulsification_Method', 'Stability_Days',
                 'Type_of_Nanocellulose', 'Modification', 'Cellulose_Type', 'Cellulose_Source'
             ];
+            
+            function downloadCSV(data) {
+                if (!data || data.length === 0) {
+                    alert('No data available to download.');
+                    return;
+                }
 
-            // ===== AÑADIR ESTA FUNCIÓN COMPLETA =====
-function downloadCSV(data) {
-    if (!data || data.length === 0) {
-        alert('No data available to download.');
-        return;
-    }
+                const escapeCSV = (value) => {
+                    if (value == null) return '';
+                    const str = String(value);
+                    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+                        const escapedStr = str.replace(/"/g, '""');
+                        return `"${escapedStr}"`;
+                    }
+                    return str;
+                };
 
-    // Función para escapar caracteres especiales para CSV
-    const escapeCSV = (value) => {
-        if (value == null) return ''; // Manejar nulos o indefinidos
-        const str = String(value);
-        // Si el valor contiene una coma, comillas dobles o un salto de línea, lo encerramos en comillas dobles
-        if (str.includes(',') || str.includes('"') || str.includes('\n')) {
-            // Escapamos las comillas dobles existentes duplicándolas
-            const escapedStr = str.replace(/"/g, '""');
-            return `"${escapedStr}"`;
-        }
-        return str;
-    };
+                const headers = Object.keys(data[0]);
+                const headerRow = headers.join(',');
+                const dataRows = data.map(row => 
+                    headers.map(header => escapeCSV(row[header])).join(',')
+                );
 
-    // Obtenemos las cabeceras del primer objeto de datos
-    const headers = Object.keys(data[0]);
-    // Creamos la primera fila del CSV (las cabeceras)
-    const headerRow = headers.join(',');
-
-    // Convertimos cada objeto de datos en una fila del CSV
-    const dataRows = data.map(row => 
-        headers.map(header => escapeCSV(row[header])).join(',')
-    );
-
-    // Unimos la cabecera y todas las filas de datos con saltos de línea
-    const csvContent = [headerRow, ...dataRows].join('\n');
-
-    // Creamos un objeto Blob para poder descargarlo
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-
-    // Creamos un enlace temporal para iniciar la descarga
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', 'nanocellulose_emulsion_data.csv'); // Nombre del archivo
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+                const csvContent = [headerRow, ...dataRows].join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'nanocellulose_emulsion_data.csv');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
             
             function getMedian(arr) {
                 if (!arr || arr.length === 0) return 0;
@@ -384,15 +363,12 @@ function downloadCSV(data) {
 
             function preprocessData(db, pubData) {
                 const pubMap = new Map(pubData.map(p => [p.DOI, p]));
-
-                // Calculate medians for imputation, handling string values like '>60'
                 const medianDroplet = getMedian(db.map(d => d.Droplet_Size_um));
                 const medianAspectRatio = getMedian(db.map(d => d.Aspect_Ratio));
 
                 return db.map(d => {
                     const pubInfo = pubMap.get(d.DOI) || {};
                     let rawType = d.Type_of_Nanocellulose || d.Type_of_Nanoparticle || '';
-                    // Standardize cellulose type naming
                     rawType = rawType.replace('NFC', 'CNF').replace('MFC', 'CNF').replace('S-CNC', 'CNC').replace(/CNC-I(I?)/, 'CNC');
                     
                     let celluloseType = 'Unknown';
@@ -407,7 +383,6 @@ function downloadCSV(data) {
                         celluloseSource = match[1].split(',')[0].replace('from ', '').trim();
                     }
                     
-                    // Helper to parse potentially numeric fields with symbols
                     const parseNumeric = (value, median) => {
                         if (value === null || value === undefined) return median;
                         if (typeof value === 'string') {
@@ -419,7 +394,7 @@ function downloadCSV(data) {
 
                     const processedEntry = {
                         ...d,
-                        ...pubInfo, // Merge publication info
+                        ...pubInfo,
                         Cellulose_Type: celluloseType,
                         Cellulose_Source: celluloseSource,
                         Droplet_Size_um: parseNumeric(d.Droplet_Size_um, medianDroplet),
@@ -430,12 +405,9 @@ function downloadCSV(data) {
                         Surface_Charge_Density_e_nm2: parseNumeric(d.Surface_Charge_Density_e_nm2, null),
                     };
 
-                    // Standardize oil content key
                     if (processedEntry.hasOwnProperty('Oil_Content_wt_percent') && !processedEntry.hasOwnProperty('Oil_Content_vol_percent')) {
                         processedEntry.Oil_Content_vol_percent = processedEntry.Oil_Content_wt_percent;
                     }
-
-
                     return processedEntry;
                 });
             }
@@ -563,8 +535,8 @@ function downloadCSV(data) {
                     paper_bgcolor: 'transparent',
                     plot_bgcolor: 'transparent',
                     font: { color: '#e2e8f0' },
-                     margin: { l: 60, r: 20, b: 120, t: 40 },
-                     colorway: ['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A', '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', '#FECB52']
+                    margin: { l: 60, r: 20, b: 120, t: 40 },
+                    colorway: ['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A', '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', '#FECB52']
                 };
                 Plotly.newPlot('distribution-plot', traces, layout, {responsive: true});
             }
@@ -673,9 +645,8 @@ function downloadCSV(data) {
                 document.getElementById('filter-value-select').addEventListener('change', updateAllPlots);
                 document.getElementById('log-x-checkbox').addEventListener('change', updateScatterPlot);
                 document.getElementById('log-y-checkbox').addEventListener('change', updateScatterPlot);
-                document.getElementById('dist-category-select').addEventListener('change', updateDistributionPlot)
+                document.getElementById('dist-category-select').addEventListener('change', updateDistributionPlot);
                 document.getElementById('download-csv-btn').addEventListener('click', () => downloadCSV(processedData));
-            };
             }
             
             init();
@@ -683,4 +654,3 @@ function downloadCSV(data) {
     </script>
 </body>
 </html>
-
