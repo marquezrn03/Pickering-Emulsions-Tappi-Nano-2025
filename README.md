@@ -1,4 +1,4 @@
-# Interactive Nanocellulose Pickering Emulsion Data Explorer
+# Interactive nanocellulose-stabilized Pickering emulsion data explorer
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15808695.svg)](https://doi.org/10.5281/zenodo.15808695)
 
@@ -8,7 +8,7 @@ This work was developed by Ronald Marquez, Roberto J. Aguado, Blaise Tardy, and 
 
 ---
 
-## 📖 Project Overview
+## 📖 Project overview
 
 Pickering emulsions stabilized by nanocellulose are a rapidly growing field of research. However, understanding the complex relationships between nanocellulose properties, processing conditions, and emulsion outcomes requires analyzing a vast body of literature. This tool aims to simplify that process.
 
@@ -19,7 +19,7 @@ It provides an interactive interface to a database manually curated from over 80
 
 ![Screenshot of the Data Explorer](https://i.imgur.com/zKVBN0r.png)
 
-## Key Features
+## Key features
 
 * **Interactive scatter plot:** Dynamically explore the relationship between any two numerical variables from the dataset. Data points can be colored by category (e.g., nanocellulose type) and filtered to isolate subsets of interest.
 * **Droplet size distribution analysis:** Compare emulsion droplet sizes across different categorical groups using box plots.
