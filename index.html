@@ -42,7 +42,7 @@
     <div class="container mx-auto p-4 md:p-6">
         <header class="text-center mb-10">
             <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight">From colloid science to industrial applications: Mapping research progress in nanocellulose-based Pickering emulsions.</h1>
-            <p class="text-lg text-slate-400 mt-2">Authors: Ronald Marquez, Roberto J. Aguado, Blaise Tardy, Marc Delgado Aguilar, Tappi Nano 2025, Girona, Spain</p>
+            <p class="text-lg text-slate-400 mt-2">Interactive nanocellulose Pickering emulsion data explorer. Authors: Ronald Marquez, Roberto J. Aguado, Blaise Tardy, Marc Delgado Aguilar, Tappi Nano 2025, Girona, Spain</p>
         </header>
 
         <main class="space-y-10">
@@ -382,8 +382,7 @@
                     let celluloseType = 'Unknown';
                     if (rawType.includes('CNC')) celluloseType = 'CNC';
                     else if (rawType.includes('CNF')) celluloseType = 'CNF';
-                    else if (rawType.includes('MFC')) celluloseType = 'MFC'; // Handle Microfibrillated Cellulose
-                    else if (rawType.includes('HTC')) celluloseType = 'HTC'; // Handle Hydrothermal Carbonization Cellulose
+                    else if (rawType.includes('MFC') || rawType.includes('HTC')) celluloseType = 'MFC'; // Handle Microfibrillated Cellulose, including HTC as MFC
                     else if (rawType.includes('Complex')) celluloseType = 'Complex'; // Handle Complex types
 
                     let celluloseSource = 'Unknown';
@@ -731,4 +730,3 @@
     </script>
 </body>
 </html>
-
