@@ -68,10 +68,10 @@ If you use this software or its dataset in your research, please cite it. This e
   month        = jul,
   year         = 2025,
   publisher    = {Zenodo},
-  version      = {v1.0.0},
-  doi          = {10.5281/zenodo.15808695},
-  url          = {[https://doi.org/10.5281/zenodo.15808695](https://doi.org/10.5281/zenodo.15808695)}
+  version      = {v1.0.1},
+  doi          = {10.5281/zenodo.15808694},
+  url          = {[https://doi.org/10.5281/zenodo.15808694](https://doi.org/10.5281/zenodo.15808694)}
 }
 
 📜 License
-The source code of this project is licensed under the MIT License. See the LICENSE file for more details.
+The source code of this project is licensed under the MIT License.
