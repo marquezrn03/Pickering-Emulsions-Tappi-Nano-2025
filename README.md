@@ -1,4 +1,4 @@
-# Interactive nanocellulose-stabilized Pickering emulsion data explorer
+# Interactive nanocellulose-stabilized Pickering emulsions data explorer
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15808694.svg)](https://doi.org/10.5281/zenodo.15808694)
 
