@@ -1,6 +1,6 @@
 # Interactive nanocellulose-stabilized Pickering emulsion data explorer
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15808695.svg)](https://doi.org/10.5281/zenodo.15808695)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15808694.svg)](https://doi.org/10.5281/zenodo.15808694)
 
 This repository contains the source code and curated dataset for the "Interactive nanocellulose-stabilized Pickering emulsion data explorer," a web-based tool designed to help researchers visualize and explore the scientific literature in the field of nanocellulose-stabilized emulsions.
 
