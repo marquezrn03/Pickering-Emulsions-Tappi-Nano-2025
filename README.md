@@ -12,7 +12,7 @@ This work was developed by Ronald Marquez, Roberto J. Aguado, Blaise Tardy, and 
 
 Pickering emulsions stabilized by nanocellulose are a rapidly growing field of research. However, understanding the complex relationships between nanocellulose properties, processing conditions, and emulsion outcomes requires analyzing a vast body of literature. This tool aims to simplify that process.
 
-It provides an interactive interface to a database manually curated from over 80 peer-reviewed articles. Researchers, students, and industry professionals can use this platform to:
+It provides an interactive interface to a database manually curated from over 50 peer-reviewed articles. Researchers, students, and industry professionals can use this platform to:
 * Identify trends and correlations in the existing data.
 * Discover knowledge gaps for future research.
 * Accelerate the design and development of new emulsion-based applications.
