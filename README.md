@@ -62,9 +62,7 @@ If you use this software or its dataset in your research, please cite it. This e
                   Aguado, Roberto J. and
                   Tardy, Blaise and
                   Delgado Aguilar, Marc},
-  title        = {{Nanocellulose Emulsion Data Explorer: An 
-                   Interactive Visualization Tool for Scientific
-                   Literature}},
+  title        = {{Nanocellulose stabilized Pickering emulsion data explorer}},
   month        = jul,
   year         = 2025,
   publisher    = {Zenodo},
