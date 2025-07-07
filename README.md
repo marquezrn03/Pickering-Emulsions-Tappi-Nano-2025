@@ -6,6 +6,22 @@ This repository contains the source code and curated dataset for the "Interactiv
 
 This work was developed by Ronald Marquez, Roberto J. Aguado, Blaise Tardy, and Marc Delgado Aguilar, and was presented at the **Tappi Nano 2025 conference in Girona, Spain**.
 
+## How to use
+
+### Online (Recommended)
+The easiest way to use the tool is to visit the live demo link: [https://marquezrn03.github.io/Pickering-Emulsions-Tappi-Nano-2025/](https://marquezrn03.github.io/Pickering-Emulsions-Tappi-Nano-2025/)
+
+## The Dataset
+
+The dataset was manually curated from over 80 scientific articles and is embedded as a JSON object within the `index.html` file. It includes parameters such as:
+* Nanocellulose type (CNC, CNF, etc.) and source (wood, cotton, bacterial, etc.)
+* Chemical modifications and surface properties
+* Particle dimensions and aspect ratio
+* Emulsion type (o/w, w/o), oil type, and concentration
+* Resulting droplet size and stability
+
+The data itself is licensed under a **Creative Commons Attribution 4.0 International License (CC BY 4.0)**. You are free to share and adapt the data for any purpose, provided you give appropriate credit.
+
 ---
 
 ## 📖 Project overview
@@ -32,22 +48,6 @@ It provides an interactive interface to a database manually curated from over 50
 * **Frontend:** HTML5, Tailwind CSS
 * **Data Visualization:** Plotly.js
 * **Logic:** Vanilla JavaScript
-
-## How to use
-
-### Online (Recommended)
-The easiest way to use the tool is to visit the live demo link: [https://marquezrn03.github.io/Pickering-Emulsions-Tappi-Nano-2025/](https://marquezrn03.github.io/Pickering-Emulsions-Tappi-Nano-2025/)
-
-## The Dataset
-
-The dataset was manually curated from over 80 scientific articles and is embedded as a JSON object within the `index.html` file. It includes parameters such as:
-* Nanocellulose type (CNC, CNF, etc.) and source (wood, cotton, bacterial, etc.)
-* Chemical modifications and surface properties
-* Particle dimensions and aspect ratio
-* Emulsion type (o/w, w/o), oil type, and concentration
-* Resulting droplet size and stability
-
-The data itself is licensed under a **Creative Commons Attribution 4.0 International License (CC BY 4.0)**. You are free to share and adapt the data for any purpose, provided you give appropriate credit.
 
 ## ✍️ How to Cite
 
